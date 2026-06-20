@@ -1,43 +1,13 @@
 .container {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 8px;
-    border-bottom: 1px solid var(--border);
-}
-
-/* 윗줄: 선택 도구 (보조 액션) */
-.selectRow {
-    display: flex;
-    gap: 6px;
-}
-
-/* 선택 도구: 작은 secondary */
-.selectRow button {
-    flex: 1;
-    font-size: 12px;
-    padding: 4px 8px;
-    color: var(--text-muted);
-}
-
-.selectRow button:hover:not(:disabled) {
-    color: var(--text);
-}
-
-/* 아랫줄: 주 액션 흐름 — 선택 수 · 대상 group · 가져오기 */
-.actionRow {
-    display: flex;
     align-items: center;
     gap: 8px;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    flex-wrap: wrap;
 }
 
 .count {
     font-size: 12px;
-    color: var(--text-muted);
-    white-space: nowrap;
-}
-
-.groupSelect {
-    flex: 1;
-    min-width: 0;
+    color: #888;
 }

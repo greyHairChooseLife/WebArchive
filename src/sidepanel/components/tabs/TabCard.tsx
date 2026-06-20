@@ -9,28 +9,23 @@ type TabCardProps = {
 
 function TabCard({ tab, checked, onToggle }: TabCardProps) {
     return (
-        <button
-            type="button"
-            className={`${styles.card} ${checked ? styles.cardChecked : ''}`}
-            onClick={() => onToggle(tab.id)}
-        >
-            {checked ? (
-                <span className={styles.checkMark} aria-hidden="true">
-                    ✓
-                </span>
-            ) : null}
+        <div className={styles.card}>
+            <input
+                type="checkbox"
+                checked={checked}
+                onChange={() => onToggle(tab.id)}
+            />
             {tab.favIconUrl ? (
                 <img className={styles.favicon} src={tab.favIconUrl} alt="" />
-            ) : (
-                <div className={styles.faviconFallback}>
-                    {tab.title.charAt(0).toUpperCase()}
+            ) : null}
+            <div className={styles.cardText}>
+                <div className={styles.title}>{tab.title}</div>
+                <div className={styles.meta}>
+                    {getDomain(tab.url)} ·{' '}
+                    {formatLastAccessed(tab.lastAccessed)}
                 </div>
-            )}
-            <div className={styles.title}>{tab.title}</div>
-            <div className={styles.meta}>
-                {getDomain(tab.url)} · {formatLastAccessed(tab.lastAccessed)}
             </div>
-        </button>
+        </div>
     );
 }
 

@@ -41,40 +41,31 @@ function ImportBar({
 
     return (
         <div className={styles.container}>
-            <div className={styles.selectRow}>
-                <button type="button" onClick={onSelectAllCurrentWindow}>
-                    현재 윈도우 전체
-                </button>
-                <button type="button" onClick={onSelectAllWindows}>
-                    모든 윈도우 전체
-                </button>
-            </div>
-            <div className={styles.actionRow}>
-                <span className={styles.count}>선택 {selectedCount}개</span>
-                <select
-                    className={styles.groupSelect}
-                    value={selectedGroupId}
-                    onChange={handleChange}
-                >
-                    <option value="" disabled>
-                        대상 group 선택
+            <span className={styles.count}>선택 {selectedCount}개</span>
+            <select value={selectedGroupId} onChange={handleChange}>
+                <option value="" disabled>
+                    대상 group 선택
+                </option>
+                {groups.map((group) => (
+                    <option key={group.id} value={group.id}>
+                        {group.name}
                     </option>
-                    {groups.map((group) => (
-                        <option key={group.id} value={group.id}>
-                            {group.name}
-                        </option>
-                    ))}
-                    <option value={NEW_GROUP_OPTION}>+ 새 group</option>
-                </select>
-                <button
-                    type="button"
-                    className="primary"
-                    disabled={selectedCount === 0 || !selectedGroupId}
-                    onClick={onImport}
-                >
-                    가져오기
-                </button>
-            </div>
+                ))}
+                <option value={NEW_GROUP_OPTION}>+ 새 group</option>
+            </select>
+            <button
+                type="button"
+                disabled={selectedCount === 0 || !selectedGroupId}
+                onClick={onImport}
+            >
+                가져오기
+            </button>
+            <button type="button" onClick={onSelectAllCurrentWindow}>
+                현재 윈도우 전체
+            </button>
+            <button type="button" onClick={onSelectAllWindows}>
+                모든 윈도우 전체
+            </button>
         </div>
     );
 }

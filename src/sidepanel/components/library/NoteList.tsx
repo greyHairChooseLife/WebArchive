@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { getDomain } from '../../../lib/tabs';
 import { useLibraryStore } from '../../../store/useLibraryStore';
 import type { Note } from '../../../types/entities';
 import styles from './NoteList.module.css';
@@ -55,36 +54,27 @@ function NoteList({
             {sortedNotes.length === 0 ? (
                 <p className={styles.empty}>note가 없습니다.</p>
             ) : (
-                <div className={styles.grid}>
-                    {sortedNotes.map((note) => (
-                        <button
-                            type="button"
-                            key={note.id}
-                            className={`${styles.card} ${
-                                selectedNoteId === note.id
-                                    ? styles.cardActive
-                                    : ''
-                            }`}
-                            onClick={() => onSelectNote(note.id)}
-                        >
-                            {note.favicon ? (
-                                <img
-                                    className={styles.favicon}
-                                    src={note.favicon}
-                                    alt=""
-                                />
-                            ) : (
-                                <div className={styles.faviconFallback}>
-                                    {note.title.charAt(0).toUpperCase()}
-                                </div>
-                            )}
+                sortedNotes.map((note) => (
+                    <div
+                        key={note.id}
+                        className={`${styles.card} ${
+                            selectedNoteId === note.id ? styles.cardActive : ''
+                        }`}
+                        onClick={() => onSelectNote(note.id)}
+                    >
+                        {note.favicon ? (
+                            <img
+                                className={styles.favicon}
+                                src={note.favicon}
+                                alt=""
+                            />
+                        ) : null}
+                        <div className={styles.cardText}>
                             <div className={styles.title}>{note.title}</div>
-                            <div className={styles.domain}>
-                                {getDomain(note.url)}
-                            </div>
-                        </button>
-                    ))}
-                </div>
+                            <div className={styles.url}>{note.url}</div>
+                        </div>
+                    </div>
+                ))
             )}
         </div>
     );

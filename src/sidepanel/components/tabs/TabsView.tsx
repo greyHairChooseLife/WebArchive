@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     debounce,
     groupByDomain,
@@ -22,23 +22,10 @@ function TabsView() {
         new Set(),
     );
     const [targetGroupId, setTargetGroupId] = useState('');
-    const [currentWindowId, setCurrentWindowId] = useState<number>();
-    const [syncing, setSyncing] = useState(false);
-    const spinTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
-
-    useEffect(() => {
-        // 윈도우 라벨용 현재 윈도우 id를 1회 확보(패널이 붙은 창).
-        chrome.windows.getCurrent().then((w) => setCurrentWindowId(w.id));
-    }, []);
 
     useEffect(() => {
         // 탭 이벤트마다 전체 재조회 + 사라진 탭의 선택 상태 청소.
         const refresh = async () => {
-            // 동기화 스피너: 시작 시 켜고, 마지막 갱신 후 최소 500ms 유지.
-            setSyncing(true);
-            if (spinTimer.current !== undefined) clearTimeout(spinTimer.current);
-            spinTimer.current = setTimeout(() => setSyncing(false), 500);
-
             const next = await queryAllTabs();
             setTabs(next);
             const liveIds = new Set(next.map((tab) => tab.id));
@@ -68,7 +55,6 @@ function TabsView() {
             chrome.tabs.onActivated.removeListener(refresh);
             chrome.tabs.onUpdated.removeListener(onUpdated);
             onUpdated.cancel();
-            if (spinTimer.current !== undefined) clearTimeout(spinTimer.current);
         };
     }, []);
 
@@ -96,19 +82,6 @@ function TabsView() {
         setSelectedTabIds(new Set(tabs.map((tab) => tab.id)));
     };
 
-    // 섹션 헤더 클릭: 그 섹션 탭이 전부 선택돼 있으면 전체 해제, 아니면 전체 선택.
-    const toggleSection = (sectionTabIds: number[]) => {
-        setSelectedTabIds((prev) => {
-            const allSelected = sectionTabIds.every((id) => prev.has(id));
-            const next = new Set(prev);
-            for (const id of sectionTabIds) {
-                if (allSelected) next.delete(id);
-                else next.add(id);
-            }
-            return next;
-        });
-    };
-
     // 선택된 탭들을 `.addNote()`로 library에 가져오는 로직
     // 조건: `targetGroupId`가 설정되어 있고, 선택된 탭이 하나라도 있어야 실행
     const handleImport = async () => {
@@ -128,20 +101,13 @@ function TabsView() {
 
     const groupedTabs =
         groupBy === 'window'
-            ? groupByWindow(tabs, currentWindowId)
+            ? groupByWindow(tabs)
             : groupBy === 'domain'
               ? groupByDomain(tabs)
               : groupByTimeBucket(tabs);
 
     return (
         <div className={styles.container}>
-            <div className={styles.syncBar}>
-                <span className={styles.syncLabel}>sync</span>
-                <span
-                    className={`${styles.spinner} ${syncing ? styles.spinnerActive : ''}`}
-                    aria-hidden="true"
-                />
-            </div>
             <div className={styles.toggleBar}>
                 <button
                     type="button"
@@ -178,56 +144,21 @@ function TabsView() {
                 {tabs.length === 0 ? (
                     <p className={styles.empty}>열린 탭이 없습니다.</p>
                 ) : (
-                    groupedTabs.map((group) => {
-                        const sectionIds = group.tabs.map((t) => t.id);
-                        const selectedCount = sectionIds.filter((id) =>
-                            selectedTabIds.has(id),
-                        ).length;
-                        const state =
-                            selectedCount === 0
-                                ? 'none'
-                                : selectedCount === sectionIds.length
-                                  ? 'all'
-                                  : 'partial';
-                        return (
-                            <section key={group.label} className={styles.section}>
-                                <button
-                                    type="button"
-                                    className={styles.sectionHeader}
-                                    onClick={() => toggleSection(sectionIds)}
-                                >
-                                    <span
-                                        className={`${styles.sectionMark} ${styles[`mark_${state}`] ?? ''}`}
-                                        aria-hidden="true"
-                                    >
-                                        {state === 'all'
-                                            ? '✓'
-                                            : state === 'partial'
-                                              ? '–'
-                                              : ''}
-                                    </span>
-                                    <span className={styles.sectionLabel}>
-                                        {group.label}
-                                    </span>
-                                    <span className={styles.sectionCount}>
-                                        {selectedCount > 0
-                                            ? `${selectedCount}/${sectionIds.length}`
-                                            : sectionIds.length}
-                                    </span>
-                                </button>
-                                <div className={styles.grid}>
-                                    {group.tabs.map((tab) => (
-                                        <TabCard
-                                            key={tab.id}
-                                            tab={tab}
-                                            checked={selectedTabIds.has(tab.id)}
-                                            onToggle={toggleTab}
-                                        />
-                                    ))}
-                                </div>
-                            </section>
-                        );
-                    })
+                    groupedTabs.map((group) => (
+                        <div key={group.label}>
+                            <div className={styles.sectionLabel}>
+                                {group.label}
+                            </div>
+                            {group.tabs.map((tab) => (
+                                <TabCard
+                                    key={tab.id}
+                                    tab={tab}
+                                    checked={selectedTabIds.has(tab.id)}
+                                    onToggle={toggleTab}
+                                />
+                            ))}
+                        </div>
+                    ))
                 )}
             </div>
         </div>
