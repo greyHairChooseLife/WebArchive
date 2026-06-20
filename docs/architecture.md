@@ -142,5 +142,8 @@ noteBody {
 ## 미해결 / 명확화 필요
 
 -   **body 캐시 정책**: lazy load 시 캐시 상한·방출(LRU 등) 미정.
--   **탭 뷰 갱신 방식**: 탭 열림/닫힘 시 뷰를 어떻게 최신화할지(패널 열 때 1회 query vs `chrome.tabs.onUpdated` 구독) 미정.
 -   **마이그레이션 경로**: 스키마 버전 관리·IndexedDB 전환 절차 미정.
+
+## 해소된 미해결 항목
+
+-   **탭 뷰 갱신 방식** (해소): 패널 진입/탭뷰 전환 시 1회성 `chrome.tabs.query()`만 호출. `onUpdated`/`onRemoved` 구독 없음(D22 단순함 우선). 구현: `src/lib/tabs.ts`의 `queryAllTabs()`, 호출부는 `TabsView` 마운트 시 1회.
