@@ -1,11 +1,24 @@
 .container {
     display: flex;
+    flex-direction: column;
     height: 100%;
+}
+
+/* 상단 그룹 버튼 아래 본문: 좌측 태그 패널 + 우측 노트 */
+.body {
+    flex: 1;
+    display: flex;
+    min-height: 0;
 }
 
 .sidebar {
     display: flex;
     flex-direction: column;
+    width: 160px;
+    flex-shrink: 0;
+    border-right: 1px solid #ccc;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .main {
@@ -13,6 +26,7 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    overflow-y: auto;
 }
 
 .empty {

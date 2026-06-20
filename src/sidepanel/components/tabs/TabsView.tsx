@@ -145,7 +145,7 @@ function TabsView() {
                     <p className={styles.empty}>열린 탭이 없습니다.</p>
                 ) : (
                     groupedTabs.map((group) => (
-                        <div key={group.label}>
+                        <div key={group.label} className={styles.section}>
                             <div className={styles.sectionLabel}>
                                 {group.label}
                             </div>

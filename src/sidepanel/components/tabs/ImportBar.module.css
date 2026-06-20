@@ -1,13 +1,56 @@
+/* 게임기 컨트롤 패널 — 큼직한 물리 버튼 느낌 (회색조) */
 .container {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+    gap: 10px;
+    margin: 0 12px 12px;
+    padding: 12px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    background: #e8e8e8;
     flex-wrap: wrap;
 }
 
 .count {
     font-size: 12px;
-    color: #888;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.container button {
+    padding: 12px 16px;
+    border: 1px solid #888;
+    border-radius: 6px;
+    background: #f5f5f5;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #999;
+}
+
+.container button:hover:not(:disabled) {
+    background: #fafafa;
+}
+
+.container button:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #999;
+}
+
+.container button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: 0 4px 0 #ccc;
+}
+
+.container select {
+    padding: 10px 8px;
+    border: 1px solid #888;
+    border-radius: 6px;
+    background: #f5f5f5;
+    color: #333;
+    font-weight: bold;
 }

@@ -1,10 +1,12 @@
+/* 상단 가로 그룹 바 */
 .container {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 8px;
-    border-right: 1px solid #ddd;
-    min-width: 120px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    background: #e8e8e8;
 }
 
 .item {
@@ -13,35 +15,54 @@
     gap: 4px;
 }
 
+/* 그룹 선택: 큰 게임기 버튼 */
 .item button.name {
-    flex: 1;
-    text-align: left;
-    padding: 4px 6px;
-    border: none;
-    background: none;
+    padding: 12px 18px;
+    border: 1px solid #888;
+    border-radius: 6px;
+    background: #f5f5f5;
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
     cursor: pointer;
-    border-radius: 4px;
+    box-shadow: 0 4px 0 #999;
+}
+
+.item button.name:hover {
+    background: #fafafa;
+}
+
+.item button.name:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #999;
 }
 
 .item button.nameActive {
-    background: #e0e7ff;
-    font-weight: bold;
+    background: #888;
+    color: #fff;
+    box-shadow: 0 4px 0 #555;
+    transform: translateY(2px);
 }
 
 .iconButton {
     border: none;
     background: none;
+    color: #888;
     cursor: pointer;
     padding: 2px 4px;
+    font-size: 13px;
+}
+
+.iconButton:hover {
+    color: #333;
 }
 
 .addForm {
     display: flex;
     gap: 4px;
-    margin-top: 8px;
 }
 
 .addForm input {
-    flex: 1;
+    width: 90px;
     min-width: 0;
 }

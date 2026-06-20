@@ -1,6 +1,14 @@
 .container {
     padding: 8px;
     border-top: 1px solid #ddd;
+    overflow-x: hidden;
+}
+
+/* 편집 모드 input은 컨테이너 직접 자식 — 폭 넘침 방지 */
+.container > input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .title {
@@ -17,6 +25,8 @@
 
 .item input {
     flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .iconButton {

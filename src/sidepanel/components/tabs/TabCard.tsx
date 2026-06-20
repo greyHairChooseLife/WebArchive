@@ -9,12 +9,11 @@ type TabCardProps = {
 
 function TabCard({ tab, checked, onToggle }: TabCardProps) {
     return (
-        <div className={styles.card}>
-            <input
-                type="checkbox"
-                checked={checked}
-                onChange={() => onToggle(tab.id)}
-            />
+        <button
+            type="button"
+            className={`${styles.card} ${checked ? styles.cardChecked : ''}`}
+            onClick={() => onToggle(tab.id)}
+        >
             {tab.favIconUrl ? (
                 <img className={styles.favicon} src={tab.favIconUrl} alt="" />
             ) : null}
@@ -25,7 +24,7 @@ function TabCard({ tab, checked, onToggle }: TabCardProps) {
                     {formatLastAccessed(tab.lastAccessed)}
                 </div>
             </div>
-        </div>
+        </button>
     );
 }
 
