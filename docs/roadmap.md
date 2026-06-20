@@ -14,8 +14,8 @@ MVP 구현 단계 인덱스. 순차 진행(앞 단계가 뒤 단계의 토대).
 
 ### 1. 프로젝트 셋업
 
--   상태: 미완료
--   문서: `01-project-setup.md`
+-   상태: 완료
+-   문서: `done/01-project-setup.md`
 -   범위: Vite + React + CRXJS + TS, npm, Biome, manifest.config.ts
 -   검증: `npm run dev`로 빈 Side Panel이 뜬다
 -   결정: D11, D21, D22, D24

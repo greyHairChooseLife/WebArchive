@@ -138,7 +138,8 @@
 
 ### D24. SW 1개, 역할은 "아이콘 클릭 → 패널 열기"로만 한정
 
--   결정: Side Panel은 manifest의 `side_panel` 선언만으로 등록되며 SW 없이도 열린다. 다만 아이콘 왼쪽클릭 한 번에 패널을 여는 편의를 위해 SW 1개를 둔다. SW는 `chrome.action.onClicked` + `setPanelBehavior`만 담당.
+-   결정: Side Panel은 manifest의 `side_panel` 선언만으로 등록되며 SW 없이도 열린다. 다만 아이콘 왼쪽클릭 한 번에 패널을 여는 편의를 위해 SW 1개를 둔다. SW는 `setPanelBehavior({ openPanelOnActionClick: true })`만 담당.
+-   `chrome.sidePanel` API(`setPanelBehavior` 포함) 사용에는 manifest `permissions`에 `sidePanel` 명시가 필요. `side_panel` 키만으로는 API가 노출되지 않음.
 -   위치: `src/extension_context/service_worker/`.
 -   이유: 탭 매니저가 1차 진입점이라 아이콘 클릭 진입 마찰을 없애는 게 중요. 데이터·storage 로직은 전부 패널이 직접 처리 → "SW↔패널 책임 분담" 복잡도가 생기지 않음.
 -   단축키·컨텍스트 메뉴는 나중(SW 역할 확장 시).
