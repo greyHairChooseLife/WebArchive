@@ -30,8 +30,8 @@ MVP 구현 단계 인덱스. 순차 진행(앞 단계가 뒤 단계의 토대).
 
 ### 3. 라이브러리 뷰
 
--   상태: 미완료
--   문서: `03-library-view.md`
+-   상태: 완료
+-   문서: `done/03-library-view.md`
 -   범위: group/tag/note CRUD, 최신순 정렬, 전역 tag 필터(+현재 group 한정), 삭제 cascade
 -   검증: CRUD·필터·삭제가 UI에서 동작
 -   결정: features 3·5, D26

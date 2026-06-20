@@ -101,7 +101,7 @@ noteBody {
 
 ## 상태 관리 (D21)
 
--   **Zustand store**: 저장 상태(groups/tags/notes)와 액션(addNote, deleteGroup, removeTag 등). storage 읽기/쓰기를 액션 안에 캡슐화 → 컴포넌트는 필요한 슬라이스만 구독. 구현: `src/store/useLibraryStore.ts` (immer 미들웨어로 불변 업데이트). 현재는 `loadAll`/`addGroup`/`addTag`/`addNote`만 구현됨, update/delete/cascade(D26)는 라이브러리 뷰 단계에서 추가.
+-   **Zustand store**: 저장 상태(groups/tags/notes)와 액션(addNote, deleteGroup, removeTag 등). storage 읽기/쓰기를 액션 안에 캡슐화 → 컴포넌트는 필요한 슬라이스만 구독. 구현: `src/store/useLibraryStore.ts` (immer 미들웨어로 불변 업데이트). `loadAll`/`add`·`update`·`delete`(group/tag/note 전부) 구현 완료. `deleteGroup`은 하위 note·body까지 cascade(D26), `deleteTag`는 note의 `tagIds`에서만 제거.
 -   **컴포넌트 useState**: 라이브 탭 목록, 그룹핑 토글, 체크박스 선택, 화면 토글 등 지역 UI 상태.
 -   storage 접근은 store 액션 → `lib/storage.ts` 경유. 키 규칙은 한 곳에.
 

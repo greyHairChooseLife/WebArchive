@@ -1,6 +1,6 @@
 # 03. 라이브러리 뷰
 
-상태: 진행 중
+상태: 완료
 
 ## 범위
 
@@ -27,24 +27,24 @@
 
 ### store (`useLibraryStore.ts`) 확장
 
--   [ ] `updateGroup`, `deleteGroup` (deleteGroup은 하위 note도 함께 제거 + storage notes/noteBodies 동기화)
--   [ ] `updateTag`, `deleteTag` (deleteTag는 모든 note의 tagIds에서 해당 id 제거)
--   [ ] `updateNote`, `deleteNote` (deleteNote는 noteBodies에서도 제거)
--   [ ] note의 `updatedAt`은 update 시 갱신
+-   [x] `updateGroup`, `deleteGroup` (deleteGroup은 하위 note도 함께 제거 + storage notes/noteBodies 동기화)
+-   [x] `updateTag`, `deleteTag` (deleteTag는 모든 note의 tagIds에서 해당 id 제거)
+-   [x] `updateNote`, `deleteNote` (deleteNote는 noteBodies에서도 제거)
+-   [x] note의 `updatedAt`은 update 시 갱신
 
 ### lib
 
--   [ ] `lib/storage.ts`에 누락 시 `deleteNoteBody(id)` 추가 (cascade에서 사용)
+-   [x] `lib/storage.ts`에 누락 시 `deleteNoteBody(id)` 추가 (cascade에서 사용)
 
 ### UI: `src/sidepanel/components/library/`
 
--   [ ] group 목록 사이드 영역: 목록 + 추가 + 이름 수정 + 삭제(확인 confirm)
--   [ ] 선택된 group의 note 목록: createdAt 내림차순, favicon+title+url 카드
--   [ ] tag 필터 UI: 전역 tag 목록에서 선택 → 기본 전역 필터, "현재 group만" 체크박스로 범위 한정
--   [ ] note 추가(빈 폼 또는 최소 입력) / note 카드 클릭 → 상세 패널
--   [ ] note 상세 패널: 제목·tagIds 수정, memo(body) textarea (열 때 lazy load, 저장 시 `setNoteBody`)
--   [ ] tag 관리: tag 추가/이름수정/삭제 UI (전역, group 무관)
--   [ ] `App.tsx`: 임시 검증 코드 제거, library 뷰를 위 컴포넌트들로 교체
+-   [x] group 목록 사이드 영역: 목록 + 추가 + 이름 수정 + 삭제(확인 confirm)
+-   [x] 선택된 group의 note 목록: createdAt 내림차순, favicon+title+url 카드
+-   [x] tag 필터 UI: 전역 tag 목록에서 선택 → 기본 전역 필터, "현재 group만" 체크박스로 범위 한정
+-   [x] note 추가(빈 폼 또는 최소 입력) / note 카드 클릭 → 상세 패널
+-   [x] note 상세 패널: 제목·tagIds 수정, memo(body) textarea (열 때 lazy load, 저장 시 `setNoteBody`)
+-   [x] tag 관리: tag 추가/이름수정/삭제 UI (전역, group 무관)
+-   [x] `App.tsx`: 임시 검증 코드 제거, library 뷰를 위 컴포넌트들로 교체
 
 ## 검증
 
@@ -58,3 +58,6 @@
 ## 진행 기록
 
 -   계획 수립 완료.
+-   store에 `updateGroup`/`deleteGroup`(cascade), `updateTag`/`deleteTag`, `updateNote`/`deleteNote`, `lib/storage.ts`의 `deleteNoteBody` 구현 완료.
+-   `src/sidepanel/components/library/` 하위 `GroupList`, `NoteList`, `TagFilter`, `TagManager`, `NoteDetail`, `LibraryView` 구현 완료. `App.tsx` 임시 검증 코드를 `LibraryView`로 교체.
+-   수동 테스트(group/tag/note CRUD, 전역 tag 필터 + group 한정, 최신순 정렬, cascade 삭제, memo lazy load)로 검증 통과. 단계 종료.
