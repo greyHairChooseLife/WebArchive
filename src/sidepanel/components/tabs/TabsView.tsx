@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     debounce,
     groupByDomain,
@@ -22,10 +22,17 @@ function TabsView() {
         new Set(),
     );
     const [targetGroupId, setTargetGroupId] = useState('');
+    const [syncing, setSyncing] = useState(false);
+    const spinTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
     useEffect(() => {
         // 탭 이벤트마다 전체 재조회 + 사라진 탭의 선택 상태 청소.
         const refresh = async () => {
+            // 동기화 스피너: 시작 시 켜고, 마지막 갱신 후 최소 500ms 유지.
+            setSyncing(true);
+            if (spinTimer.current !== undefined) clearTimeout(spinTimer.current);
+            spinTimer.current = setTimeout(() => setSyncing(false), 500);
+
             const next = await queryAllTabs();
             setTabs(next);
             const liveIds = new Set(next.map((tab) => tab.id));
@@ -55,6 +62,7 @@ function TabsView() {
             chrome.tabs.onActivated.removeListener(refresh);
             chrome.tabs.onUpdated.removeListener(onUpdated);
             onUpdated.cancel();
+            if (spinTimer.current !== undefined) clearTimeout(spinTimer.current);
         };
     }, []);
 
@@ -140,6 +148,13 @@ function TabsView() {
                 onSelectAllCurrentWindow={handleSelectAllCurrentWindow}
                 onSelectAllWindows={handleSelectAllWindows}
             />
+            <div className={styles.syncBar}>
+                <span className={styles.syncLabel}>SYNC</span>
+                <span
+                    className={`${styles.spinner} ${syncing ? styles.spinnerActive : ''}`}
+                    aria-hidden="true"
+                />
+            </div>
             <div className={styles.list}>
                 {tabs.length === 0 ? (
                     <p className={styles.empty}>열린 탭이 없습니다.</p>

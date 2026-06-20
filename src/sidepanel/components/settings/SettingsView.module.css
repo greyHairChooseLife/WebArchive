@@ -4,6 +4,14 @@
 
 .heading {
     margin: 0 0 12px;
+    color: var(--phosphor);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.heading::before {
+    content: "## ";
+    color: var(--phosphor-dim);
 }
 
 .actions {

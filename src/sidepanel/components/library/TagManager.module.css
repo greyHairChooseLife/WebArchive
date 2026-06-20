@@ -1,10 +1,9 @@
 .container {
-    padding: 8px;
-    border-top: 1px solid #ddd;
+    padding: 10px 8px;
+    border-top: 1px solid var(--phosphor-dim);
     overflow-x: hidden;
 }
 
-/* 편집 모드 input은 컨테이너 직접 자식 — 폭 넘침 방지 */
 .container > input {
     width: 100%;
     min-width: 0;
@@ -12,15 +11,36 @@
 }
 
 .title {
+    font-size: 11px;
     font-weight: bold;
-    margin-bottom: 4px;
+    color: var(--phosphor-dim);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.title::before {
+    content: "## ";
 }
 
 .item {
     display: flex;
     align-items: center;
     gap: 4px;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
+}
+
+.item > span {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.item > span::before {
+    content: "# ";
+    color: var(--phosphor-dim);
 }
 
 .item input {
@@ -32,14 +52,25 @@
 .iconButton {
     border: none;
     background: none;
+    color: var(--phosphor-dim);
     cursor: pointer;
-    padding: 2px 4px;
+    padding: 2px 3px;
+    text-shadow: none;
+}
+
+.iconButton::before {
+    content: none;
+}
+
+.iconButton:hover {
+    color: var(--phosphor);
+    background: none;
 }
 
 .addForm {
     display: flex;
     gap: 4px;
-    margin-top: 4px;
+    margin-top: 8px;
 }
 
 .addForm input {

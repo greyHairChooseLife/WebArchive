@@ -1,14 +1,13 @@
-/* 노트 목록 위 상세 패널 — 가로 꽉 차게, 넉넉하게 */
+/* 레코드 상세 — 터미널 데이터 뷰 */
 .container {
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin: 12px;
-    padding: 18px;
-    border: 2px solid #555;
-    border-radius: 4px;
-    background: #fff;
-    box-shadow: 6px 6px 0 #888;
+    padding: 16px;
+    border: 1px solid var(--phosphor);
+    background: var(--bg-panel);
+    box-shadow: var(--glow);
 }
 
 .field {
@@ -19,78 +18,64 @@
 
 .field label,
 .field span {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: bold;
-    color: #555;
+    color: var(--phosphor-dim);
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.08em;
+}
+
+.field label::before,
+.field > span::before {
+    content: "> ";
 }
 
 .field input,
 .field textarea {
     width: 100%;
     box-sizing: border-box;
-    padding: 8px;
-    font: inherit;
-    border: 1px solid #999;
-    border-radius: 4px;
 }
 
 .field input {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
 
 .tagList {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
 }
 
 .tagOption {
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal;
     text-transform: none;
     letter-spacing: 0;
-    color: #333;
-    padding: 4px 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    color: var(--phosphor);
+    padding: 3px 8px;
+    border: 1px solid var(--phosphor-dim);
+}
+
+.tagOption::before {
+    content: none;
 }
 
 .url {
-    font-size: 12px;
-    color: #888;
+    font-size: 11px;
+    color: var(--phosphor-dim);
     word-break: break-all;
+}
+
+.url::before {
+    content: "URL: ";
 }
 
 .actions {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-}
-
-/* 닫기/삭제 = 게임기 버튼 톤 */
-.actions button {
-    padding: 8px 16px;
-    border: 1px solid #888;
-    border-radius: 6px;
-    background: #f5f5f5;
-    color: #333;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: 0 3px 0 #999;
-}
-
-.actions button:hover {
-    background: #fafafa;
-}
-
-.actions button:active {
-    transform: translateY(2px);
-    box-shadow: 0 1px 0 #999;
 }

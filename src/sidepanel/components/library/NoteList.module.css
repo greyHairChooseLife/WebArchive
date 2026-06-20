@@ -1,35 +1,55 @@
 .container {
-    padding: 8px;
+    padding: 8px 10px;
 }
 
 .card {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px;
-    border: 1.5px solid #999;
-    border-radius: 4px;
-    margin-bottom: 8px;
-    background: #fff;
+    gap: 8px;
+    padding: 6px 8px;
+    border: 1px solid transparent;
+    border-radius: 0;
+    margin-bottom: 2px;
+    background: transparent;
+    color: var(--phosphor-dim);
+    text-shadow: none;
     cursor: pointer;
 }
 
-.card:hover {
-    background: #f5f5f5;
+.card::before {
+    content: "- ";
+    color: var(--phosphor-dim);
+    flex-shrink: 0;
 }
 
-/* 선택됨: 앰버 하이라이트 (탭 선택과 일관) */
+.card:hover {
+    color: var(--phosphor);
+    background: var(--phosphor-faint);
+}
+
+.card:hover::before {
+    content: "» ";
+    color: var(--phosphor);
+}
+
+/* 열린 항목 = 반전 */
 .cardActive {
-    background: #fde68a;
-    border: 2px solid #b45309;
-    padding: 7.5px;
+    background: var(--phosphor);
+    color: var(--bg);
     font-weight: bold;
 }
 
+.cardActive::before {
+    content: "█ ";
+    color: var(--bg);
+}
+
 .favicon {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     flex-shrink: 0;
+    filter: grayscale(1) brightness(1.4) sepia(1) hue-rotate(70deg)
+        saturate(3);
 }
 
 .cardText {
@@ -46,14 +66,18 @@
 }
 
 .url {
-    font-size: 12px;
-    color: #888;
+    font-size: 11px;
+    opacity: 0.7;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .empty {
-    color: #888;
+    color: var(--phosphor-dim);
     padding: 8px;
+}
+
+.empty::before {
+    content: "$ ";
 }

@@ -1,39 +1,64 @@
 .card {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     width: 100%;
-    padding: 8px;
-    border: 1.5px solid #999;
-    border-radius: 4px;
-    margin-bottom: 8px;
-    background: #fff;
+    padding: 6px 8px;
+    border: 1px solid transparent;
+    border-radius: 0;
+    margin-bottom: 2px;
+    background: transparent;
     text-align: left;
     font: inherit;
-    color: inherit;
+    color: var(--phosphor-dim);
+    text-shadow: none;
     cursor: pointer;
 }
 
-.card:hover {
-    background: #f5f5f5;
+.card::before {
+    content: "  ";
+    white-space: pre;
+    color: var(--phosphor);
+    flex-shrink: 0;
 }
 
-/* 선택됨: 과감하게 — 진한 배경 + 굵은 보더 */
+.card:hover {
+    color: var(--phosphor);
+    background: var(--phosphor-faint);
+}
+
+.card:hover::before {
+    content: "» ";
+}
+
+/* 선택됨 = 터미널 반전(invert) + 마커 */
 .cardChecked {
-    background: #fde68a;
-    border: 2px solid #b45309;
-    padding: 5px;
+    background: var(--phosphor);
+    color: var(--bg);
     font-weight: bold;
 }
 
+.cardChecked::before {
+    content: "█ ";
+    color: var(--bg);
+}
+
 .cardChecked:hover {
-    background: #fcd34d;
+    background: var(--phosphor);
+    color: var(--bg);
+}
+
+.cardChecked:hover::before {
+    content: "█ ";
 }
 
 .favicon {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     flex-shrink: 0;
+    /* CRT 모노크롬 느낌 */
+    filter: grayscale(1) brightness(1.4) sepia(1) hue-rotate(70deg)
+        saturate(3);
 }
 
 .cardText {
@@ -50,8 +75,8 @@
 }
 
 .meta {
-    font-size: 12px;
-    color: #888;
+    font-size: 11px;
+    opacity: 0.7;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

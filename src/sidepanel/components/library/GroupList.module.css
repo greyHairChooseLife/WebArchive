@@ -1,60 +1,72 @@
-/* 상단 가로 그룹 바 */
+/* 상단 가로 그룹 바 — 디렉터리 선택 */
 .container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
-    padding: 12px;
-    border-bottom: 1px solid #ccc;
-    background: #e8e8e8;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--phosphor-dim);
+    background: var(--bg-panel);
 }
 
 .item {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
 }
 
-/* 그룹 선택: 큰 게임기 버튼 */
 .item button.name {
-    padding: 12px 18px;
-    border: 1px solid #888;
-    border-radius: 6px;
-    background: #f5f5f5;
-    color: #333;
+    padding: 8px 14px;
+    border: 1px solid var(--phosphor-dim);
+    border-radius: 0;
+    background: transparent;
+    color: var(--phosphor);
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    box-shadow: 0 4px 0 #999;
+    text-shadow: var(--glow);
+}
+
+.item button.name::before {
+    content: "/";
+    color: var(--phosphor-dim);
 }
 
 .item button.name:hover {
-    background: #fafafa;
-}
-
-.item button.name:active {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #999;
+    background: var(--phosphor-faint);
 }
 
 .item button.nameActive {
-    background: #888;
-    color: #fff;
-    box-shadow: 0 4px 0 #555;
-    transform: translateY(2px);
+    background: var(--phosphor);
+    color: var(--bg);
+    text-shadow: none;
+    box-shadow: var(--glow);
+}
+
+.item button.nameActive::before {
+    content: "/";
+    color: var(--bg);
 }
 
 .iconButton {
     border: none;
     background: none;
-    color: #888;
+    color: var(--phosphor-dim);
     cursor: pointer;
-    padding: 2px 4px;
-    font-size: 13px;
+    padding: 2px 3px;
+    font-size: 12px;
+    text-shadow: none;
+}
+
+.iconButton::before {
+    content: none;
 }
 
 .iconButton:hover {
-    color: #333;
+    color: var(--phosphor);
+    background: none;
 }
 
 .addForm {
