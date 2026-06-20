@@ -56,3 +56,14 @@ export async function deleteNoteBody(id: string): Promise<void> {
     delete noteBodies[id];
     await chrome.storage.local.set({ [KEYS.noteBodies]: noteBodies });
 }
+
+export async function getNoteBodies(): Promise<Record<string, NoteBody>> {
+    const result = await chrome.storage.local.get(KEYS.noteBodies);
+    return (result[KEYS.noteBodies] as Record<string, NoteBody>) ?? {};
+}
+
+export async function setNoteBodies(
+    noteBodies: Record<string, NoteBody>,
+): Promise<void> {
+    await chrome.storage.local.set({ [KEYS.noteBodies]: noteBodies });
+}
