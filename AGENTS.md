@@ -31,6 +31,7 @@
 | [decisions.md](docs/decisions.md) | "왜 이렇게 만들었지?" 의문이 생길 때 / 기술 스택 교체 고려 시 / 설계 판단 전 충돌 여부 확인 | 주요 라이브러리·프레임워크 교체 / 아키텍처 방향 변경 / 기존 결정 번복 시 / 미해결 항목 확정 시 |
 | [contributing.md](docs/contributing.md) | 코드 작성·배치 전 / 디렉토리 구조 확인 / 코드 규칙 확인 / 문서 동기화 규칙 확인 | 디렉토리 구조 확정·변경 / 코드 규칙 추가 / 언어·스타일링 방식 결정 시 |
 | [runbook.md](docs/runbook.md) | 개발 환경 세팅 / 빌드·확장 로드 절차 / 데이터 백업·복원 | 패키지 매니저·스크립트 확정 / 빌드 절차 변경 / 테스트·린트 도구 추가 |
+| [roadmap.md](docs/roadmap.md) | 다음 작업 확인 / 현재 어느 단계인지 / 단계별 범위·검증 기준 (상세는 `roadmap/{active,done}/`) | 단계 시작 시 `active/`에 상세 계획 문서 작성 / 완료 시 상태표 갱신 + 문서를 `done/`으로 이동 |
 
 # git commit message rule
 
