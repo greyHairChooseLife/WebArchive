@@ -46,8 +46,8 @@ MVP 구현 단계 인덱스. 순차 진행(앞 단계가 뒤 단계의 토대).
 
 ### 5. 데이터 관리 + 마무리
 
--   상태: 미완료
--   문서: `05-data-and-wrapup.md`
+-   상태: 완료
+-   문서: `done/05-data-and-wrapup.md`
 -   범위: JSON export/import(통째 교체), SW로 아이콘 클릭 → 패널 열기 연결
 -   검증: import가 전체 데이터를 교체, 아이콘 클릭으로 패널 열림
 -   결정: features 6, D14, D24
