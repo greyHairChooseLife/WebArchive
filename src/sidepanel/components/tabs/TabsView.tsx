@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
+    debounce,
     groupByDomain,
     groupByTimeBucket,
     groupByWindow,
@@ -21,9 +22,48 @@ function TabsView() {
         new Set(),
     );
     const [targetGroupId, setTargetGroupId] = useState('');
+    const [syncing, setSyncing] = useState(false);
+    const spinTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
     useEffect(() => {
-        queryAllTabs().then(setTabs);
+        // 탭 이벤트마다 전체 재조회 + 사라진 탭의 선택 상태 청소.
+        const refresh = async () => {
+            // 동기화 스피너: 시작 시 켜고, 마지막 갱신 후 최소 500ms 유지.
+            setSyncing(true);
+            if (spinTimer.current !== undefined) clearTimeout(spinTimer.current);
+            spinTimer.current = setTimeout(() => setSyncing(false), 500);
+
+            const next = await queryAllTabs();
+            setTabs(next);
+            const liveIds = new Set(next.map((tab) => tab.id));
+            setSelectedTabIds((prev) => {
+                const cleaned = new Set(
+                    [...prev].filter((id) => liveIds.has(id)),
+                );
+                return cleaned.size === prev.size ? prev : cleaned;
+            });
+        };
+
+        refresh();
+
+        // 즉시성 우선: 열기/닫기/이동/활성전환은 바로 재조회.
+        // onUpdated만 단일 네비게이션당 수 회 터지므로 debounce.
+        const onUpdated = debounce(refresh, 250);
+        chrome.tabs.onCreated.addListener(refresh);
+        chrome.tabs.onRemoved.addListener(refresh);
+        chrome.tabs.onMoved.addListener(refresh);
+        chrome.tabs.onActivated.addListener(refresh);
+        chrome.tabs.onUpdated.addListener(onUpdated);
+
+        return () => {
+            chrome.tabs.onCreated.removeListener(refresh);
+            chrome.tabs.onRemoved.removeListener(refresh);
+            chrome.tabs.onMoved.removeListener(refresh);
+            chrome.tabs.onActivated.removeListener(refresh);
+            chrome.tabs.onUpdated.removeListener(onUpdated);
+            onUpdated.cancel();
+            if (spinTimer.current !== undefined) clearTimeout(spinTimer.current);
+        };
     }, []);
 
     const toggleTab = (tabId: number) => {
@@ -108,12 +148,19 @@ function TabsView() {
                 onSelectAllCurrentWindow={handleSelectAllCurrentWindow}
                 onSelectAllWindows={handleSelectAllWindows}
             />
+            <div className={styles.syncBar}>
+                <span className={styles.syncLabel}>SYNC</span>
+                <span
+                    className={`${styles.spinner} ${syncing ? styles.spinnerActive : ''}`}
+                    aria-hidden="true"
+                />
+            </div>
             <div className={styles.list}>
                 {tabs.length === 0 ? (
                     <p className={styles.empty}>열린 탭이 없습니다.</p>
                 ) : (
                     groupedTabs.map((group) => (
-                        <div key={group.label}>
+                        <div key={group.label} className={styles.section}>
                             <div className={styles.sectionLabel}>
                                 {group.label}
                             </div>

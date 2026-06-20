@@ -35,43 +35,50 @@ function LibraryView() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.sidebar}>
-                <GroupList
-                    groups={groups}
-                    selectedGroupId={effectiveGroupId}
-                    onSelectGroup={(groupId) => {
-                        setSelectedGroupId(groupId);
-                        setSelectedNoteId(null);
-                    }}
-                />
-                <TagManager tags={tags} />
-            </div>
-            <div className={styles.main}>
-                <TagFilter
-                    tags={tags}
-                    selectedTagId={selectedTagId}
-                    onSelectTag={setSelectedTagId}
-                    scopeToGroup={scopeToGroup}
-                    onScopeToGroupChange={setScopeToGroup}
-                />
-                {effectiveGroupId ? (
-                    <NoteList
-                        notes={filteredNotes}
-                        groupId={effectiveGroupId}
-                        selectedNoteId={selectedNoteId}
-                        onSelectNote={setSelectedNoteId}
+            {/* 상단: 그룹 큰 버튼 가로 나열 */}
+            <GroupList
+                groups={groups}
+                selectedGroupId={effectiveGroupId}
+                onSelectGroup={(groupId) => {
+                    setSelectedGroupId(groupId);
+                    setSelectedNoteId(null);
+                }}
+            />
+            <div className={styles.body}>
+                {/* 좌측: 태그 필터 + 태그 관리 */}
+                <div className={styles.sidebar}>
+                    <TagFilter
+                        tags={tags}
+                        selectedTagId={selectedTagId}
+                        onSelectTag={setSelectedTagId}
+                        scopeToGroup={scopeToGroup}
+                        onScopeToGroupChange={setScopeToGroup}
                     />
-                ) : (
-                    <p className={styles.empty}>group을 먼저 추가해주세요.</p>
-                )}
+                    <TagManager tags={tags} />
+                </div>
+                {/* 우측: 상세(목록 위) + 노트 목록 */}
+                <div className={styles.main}>
+                    {selectedNote ? (
+                        <NoteDetail
+                            note={selectedNote}
+                            tags={tags}
+                            onClose={() => setSelectedNoteId(null)}
+                        />
+                    ) : null}
+                    {effectiveGroupId ? (
+                        <NoteList
+                            notes={filteredNotes}
+                            groupId={effectiveGroupId}
+                            selectedNoteId={selectedNoteId}
+                            onSelectNote={setSelectedNoteId}
+                        />
+                    ) : (
+                        <p className={styles.empty}>
+                            group을 먼저 추가해주세요.
+                        </p>
+                    )}
+                </div>
             </div>
-            {selectedNote ? (
-                <NoteDetail
-                    note={selectedNote}
-                    tags={tags}
-                    onClose={() => setSelectedNoteId(null)}
-                />
-            ) : null}
         </div>
     );
 }

@@ -107,3 +107,18 @@ export function formatLastAccessed(
     if (age < DAY) return `${Math.floor(age / HOUR)}시간 전`;
     return `${Math.floor(age / DAY)}일 전`;
 }
+
+// onUpdated 폭증(단일 네비게이션당 수 회) 완화용. cancel로 대기 타이머 정리.
+type Debounced = (() => void) & { cancel: () => void };
+
+export function debounce(fn: () => void, delayMs: number): Debounced {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const debounced = () => {
+        if (timer !== undefined) clearTimeout(timer);
+        timer = setTimeout(fn, delayMs);
+    };
+    debounced.cancel = () => {
+        if (timer !== undefined) clearTimeout(timer);
+    };
+    return debounced;
+}

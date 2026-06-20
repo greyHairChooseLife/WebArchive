@@ -1,8 +1,141 @@
+/* ============================================================
+   THEME: CRT GREEN-PHOSPHOR TERMINAL
+   80년대 컴퓨터 단말기 — WebArchive를 뒤지는 콘솔
+   ============================================================ */
+:root {
+    --bg: #050a05;
+    --bg-panel: #0a160a;
+    --phosphor: #33ff66;
+    --phosphor-dim: #1f9940;
+    --phosphor-faint: #0e3d1c;
+    --amber: #ffcc33;
+    --scanline: rgba(0, 0, 0, 0.25);
+    --glow: 0 0 4px rgba(51, 255, 102, 0.6);
+    --mono:
+        "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", "Courier New",
+        monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    font:
-        14px / 1.4 system-ui,
-        "Segoe UI",
-        Roboto,
-        sans-serif;
+    font: 13px / 1.5 var(--mono);
+    color: var(--phosphor);
+    background: var(--bg);
+    text-shadow: var(--glow);
+}
+
+/* CRT 스캔라인 오버레이 — 화면 전체에 가로줄 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+        var(--scanline) 0 1px,
+        transparent 1px 3px
+    );
+}
+
+/* 텍스트 위주 화면(ARCHIVE)에선 스캔라인을 끄러 가독성 확보 */
+body.noScanline::before {
+    display: none;
+}
+
+/* 깜빡이는 CRT 비네팅(은은한 가장자리 어둠) */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.9);
+}
+
+/* ---- 버튼: 터미널 명령 ---- */
+button {
+    font: inherit;
+    padding: 6px 12px;
+    border: 1px solid var(--phosphor-dim);
+    border-radius: 0;
+    background: transparent;
+    color: var(--phosphor);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    text-shadow: var(--glow);
+    transition: none;
+}
+
+button::before {
+    content: "> ";
+    color: var(--phosphor-dim);
+}
+
+button:hover:not(:disabled) {
+    background: var(--phosphor);
+    color: var(--bg);
+    text-shadow: none;
+    box-shadow: var(--glow);
+}
+
+button:hover:not(:disabled)::before {
+    color: var(--bg);
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ---- 입력: 터미널 프롬프트 ---- */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+select {
+    font: inherit;
+    padding: 6px 8px;
+    border: 1px solid var(--phosphor-dim);
+    border-radius: 0;
+    background: var(--bg-panel);
+    color: var(--phosphor);
+    text-shadow: var(--glow);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--phosphor);
+    box-shadow: var(--glow);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--phosphor);
+}
+
+::selection {
+    background: var(--phosphor);
+    color: var(--bg);
+    text-shadow: none;
+}
+
+/* 스크롤바도 터미널 톤 */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--phosphor-faint);
+    border: 1px solid var(--phosphor-dim);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--phosphor-dim);
 }

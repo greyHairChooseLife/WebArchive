@@ -1,47 +1,80 @@
+/* 상단 가로 그룹 바 — 디렉터리 선택 */
 .container {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 8px;
-    border-right: 1px solid #ddd;
-    min-width: 120px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--phosphor-dim);
+    background: var(--bg-panel);
 }
 
 .item {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
 }
 
 .item button.name {
-    flex: 1;
-    text-align: left;
-    padding: 4px 6px;
-    border: none;
-    background: none;
+    padding: 8px 14px;
+    border: 1px solid var(--phosphor-dim);
+    border-radius: 0;
+    background: transparent;
+    color: var(--phosphor);
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    border-radius: 4px;
+    text-shadow: var(--glow);
+}
+
+.item button.name::before {
+    content: "/";
+    color: var(--phosphor-dim);
+}
+
+.item button.name:hover {
+    background: var(--phosphor-faint);
 }
 
 .item button.nameActive {
-    background: #e0e7ff;
-    font-weight: bold;
+    background: var(--phosphor);
+    color: var(--bg);
+    text-shadow: none;
+    box-shadow: var(--glow);
+}
+
+.item button.nameActive::before {
+    content: "/";
+    color: var(--bg);
 }
 
 .iconButton {
     border: none;
     background: none;
+    color: var(--phosphor-dim);
     cursor: pointer;
-    padding: 2px 4px;
+    padding: 2px 3px;
+    font-size: 12px;
+    text-shadow: none;
+}
+
+.iconButton::before {
+    content: none;
+}
+
+.iconButton:hover {
+    color: var(--phosphor);
+    background: none;
 }
 
 .addForm {
     display: flex;
     gap: 4px;
-    margin-top: 8px;
 }
 
 .addForm input {
-    flex: 1;
+    width: 90px;
     min-width: 0;
 }

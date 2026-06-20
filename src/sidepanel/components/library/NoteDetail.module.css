@@ -1,21 +1,33 @@
+/* 레코드 상세 — 터미널 데이터 뷰 */
 .container {
-    width: 240px;
-    border-left: 1px solid #ddd;
-    padding: 8px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    margin: 12px;
+    padding: 16px;
+    border: 1px solid var(--phosphor);
+    background: var(--bg-panel);
+    box-shadow: var(--glow);
 }
 
 .field {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
 }
 
-.field label {
-    font-size: 12px;
-    color: #666;
+.field label,
+.field span {
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--phosphor-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.field label::before,
+.field > span::before {
+    content: "> ";
 }
 
 .field input,
@@ -24,26 +36,46 @@
     box-sizing: border-box;
 }
 
+.field input {
+    font-size: 15px;
+    font-weight: bold;
+}
+
 .tagList {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 6px;
 }
 
 .tagOption {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     font-size: 12px;
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--phosphor);
+    padding: 3px 8px;
+    border: 1px solid var(--phosphor-dim);
+}
+
+.tagOption::before {
+    content: none;
 }
 
 .url {
-    font-size: 12px;
-    color: #888;
+    font-size: 11px;
+    color: var(--phosphor-dim);
     word-break: break-all;
+}
+
+.url::before {
+    content: "URL: ";
 }
 
 .actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 8px;
 }

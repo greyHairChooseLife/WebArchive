@@ -1,0 +1,84 @@
+.shell {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: var(--bg);
+}
+
+/* 터미널 헤더 배너 */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--phosphor-dim);
+    font-weight: bold;
+    letter-spacing: 0.15em;
+}
+
+.prompt::before {
+    content: "┌─ ";
+    color: var(--phosphor-dim);
+}
+
+/* 깜빡이는 커서 */
+.cursor {
+    animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* nav = 터미널 탭 메뉴 */
+.nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--phosphor-dim);
+}
+
+.navItem,
+.navActive {
+    flex: 1;
+    border: none;
+    border-right: 1px solid var(--phosphor-dim);
+    border-radius: 0;
+    background: transparent;
+    color: var(--phosphor-dim);
+    padding: 10px 8px;
+    text-shadow: none;
+}
+
+.navItem::before,
+.navActive::before {
+    content: "[ ";
+    opacity: 0.5;
+}
+
+.navItem::after,
+.navActive::after {
+    content: " ]";
+    opacity: 0.5;
+}
+
+.navItem:hover {
+    color: var(--phosphor);
+    background: var(--phosphor-faint);
+}
+
+.navActive {
+    color: var(--bg);
+    background: var(--phosphor);
+    font-weight: bold;
+    box-shadow: var(--glow);
+}
+
+.viewport {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
