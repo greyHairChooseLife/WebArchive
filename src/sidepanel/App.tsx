@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import LibraryView from './components/library/LibraryView';
+import TabsView from './components/tabs/TabsView';
 import { useLibraryStore } from '../store/useLibraryStore';
 
 type View = 'tabs' | 'library';
@@ -22,7 +23,7 @@ function App() {
                     라이브러리
                 </button>
             </nav>
-            {view === 'tabs' ? <p>탭 뷰</p> : <LibraryView />}
+            {view === 'tabs' ? <TabsView /> : <LibraryView />}
         </>
     );
 }
