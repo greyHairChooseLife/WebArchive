@@ -36,7 +36,7 @@ npm run build
 ## 포맷
 
 ```
-npx biome format --write .
+npm run format
 ```
 
 -   포맷터는 Biome. 린트·테스트는 MVP 미사용 (D22).
@@ -56,5 +56,4 @@ npx biome format --write .
 
 ## 미해결 / 명확화 필요
 
--   **스크립트 이름**: dev/build/format 등 정확한 npm script 미정 (셋업 시 package.json 확정).
 -   **빌드 산출 디렉토리**: CRXJS 기본값 확인 필요.
