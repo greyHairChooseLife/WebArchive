@@ -1,6 +1,6 @@
 # 02. 타입 + storage 토대
 
-상태: 진행 중
+상태: 완료
 
 ## 범위
 
@@ -23,17 +23,17 @@
 
 ## 작업 목록
 
--   [ ] `src/types/`: `Group`, `Tag`, `Note`(메타), `NoteBody` 타입 정의 (architecture.md 데이터 모델 그대로)
--   [ ] `src/lib/ids.ts`: `generateId()` = `crypto.randomUUID()` 래퍼
--   [ ] `src/lib/storage.ts`:
+-   [x] `src/types/`: `Group`, `Tag`, `Note`(메타), `NoteBody` 타입 정의 (architecture.md 데이터 모델 그대로) → `src/types/entities.ts`
+-   [x] `src/lib/ids.ts`: `generateId()` = `crypto.randomUUID()` 래퍼
+-   [x] `src/lib/storage.ts`:
     -   키 상수 정의 (`groups`, `tags`, `notes`, `noteBodies`)
     -   `getGroups/setGroups`, `getTags/setTags`, `getNotes/setNotes`, `getNoteBody(id)/setNoteBody(id, body)` 형태의 함수
     -   내부적으로 `chrome.storage.local.get/set` 사용
--   [ ] `src/store/`: Zustand store 골격
+-   [x] `src/store/`: Zustand store 골격 → `src/store/useLibraryStore.ts` (immer 미들웨어)
     -   상태: `groups`, `tags`, `notes` (body는 store에 안 둠, 필요 시 컴포넌트가 storage.ts 직접 호출)
     -   액션: `loadAll()` (storage → store 채움), `addGroup`, `addTag`, `addNote` (store + storage 동시 반영)
--   [ ] 임시 검증: App.tsx 등에서 `addNote` 호출 → 새로고침 → `loadAll` 결과로 복원되는지 확인 (UI는 임시/최소, 3단계에서 교체됨)
--   [ ] architecture.md "미해결 → 스토리지 쓰기 전략" 항목 해소 반영
+-   [x] 임시 검증: App.tsx에서 `addNote` 호출 → 새로고침 → `loadAll` 결과로 복원되는지 확인 (UI는 임시/최소, 3단계에서 교체됨)
+-   [x] architecture.md "미해결 → 스토리지 쓰기 전략" 항목 해소 반영
 
 ## 검증
 
@@ -42,3 +42,6 @@
 ## 진행 기록
 
 -   계획 수립 완료.
+-   타입(`types/entities.ts`), `lib/ids.ts`, `lib/storage.ts`, `store/useLibraryStore.ts`(immer 미들웨어) 구현 완료.
+-   App.tsx에 임시 검증 UI 추가, 수동 확인(추가 → 새로고침 → 복원) 통과.
+-   architecture.md 스토리지 섹션과 "미해결" 목록 갱신 완료. 단계 종료.

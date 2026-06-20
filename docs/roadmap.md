@@ -22,8 +22,8 @@ MVP 구현 단계 인덱스. 순차 진행(앞 단계가 뒤 단계의 토대).
 
 ### 2. 타입 + storage 토대
 
--   상태: 미완료
--   문서: `02-types-storage.md`
+-   상태: 완료
+-   문서: `done/02-types-storage.md`
 -   범위: 엔티티 타입, `lib/storage.ts`, `lib/ids.ts`, Zustand store 골격
 -   검증: add/load가 storage에 반영되고 새로고침 후 복원된다
 -   결정: D5, D7, D13, D21

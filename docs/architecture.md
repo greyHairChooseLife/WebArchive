@@ -101,7 +101,7 @@ noteBody {
 
 ## 상태 관리 (D21)
 
--   **Zustand store**: 저장 상태(groups/tags/notes)와 액션(addNote, deleteGroup, removeTag 등). storage 읽기/쓰기를 액션 안에 캡슐화 → 컴포넌트는 필요한 슬라이스만 구독.
+-   **Zustand store**: 저장 상태(groups/tags/notes)와 액션(addNote, deleteGroup, removeTag 등). storage 읽기/쓰기를 액션 안에 캡슐화 → 컴포넌트는 필요한 슬라이스만 구독. 구현: `src/store/useLibraryStore.ts` (immer 미들웨어로 불변 업데이트). 현재는 `loadAll`/`addGroup`/`addTag`/`addNote`만 구현됨, update/delete/cascade(D26)는 라이브러리 뷰 단계에서 추가.
 -   **컴포넌트 useState**: 라이브 탭 목록, 그룹핑 토글, 체크박스 선택, 화면 토글 등 지역 UI 상태.
 -   storage 접근은 store 액션 → `lib/storage.ts` 경유. 키 규칙은 한 곳에.
 
@@ -109,7 +109,14 @@ noteBody {
 
 -   데이터 영속화는 `chrome.storage.local` (D7).
 -   note 메타와 body를 분리 저장. body는 상세 열 때 lazy load (D5).
--   구체적 키 레이아웃·쓰기 전략(전체 덤프 vs 부분 쓰기)·body 캐시 정책은 **미확정** (셋업 시 확정).
+-   **쓰기 전략**: 전체 덤프. `groups`/`tags`/`notes`/`noteBodies` 각각 컬렉션 단위 키 하나로 통째 저장하고, 변경 시 해당 컬렉션 전체를 다시 씀.
+-   **키 레이아웃**:
+    -   `groups`: `Group[]`
+    -   `tags`: `Tag[]`
+    -   `notes`: `Note[]` (메타만)
+    -   `noteBodies`: `Record<string, NoteBody>` (id → body, lazy 접근용)
+-   구현: `src/lib/storage.ts`. `getGroups/setGroups`, `getTags/setTags`, `getNotes/setNotes`, `getNoteBody(id)/setNoteBody(id, body)` 형태로 키 접근을 캡슐화.
+-   body 캐시 정책은 여전히 미확정 (아래 미해결 참조).
 
 ## 정보 수집 (MVP)
 
@@ -134,7 +141,6 @@ noteBody {
 
 ## 미해결 / 명확화 필요
 
--   **스토리지 쓰기 전략**: 전체 덤프 vs 키 단위 부분 쓰기 미정.
 -   **body 캐시 정책**: lazy load 시 캐시 상한·방출(LRU 등) 미정.
 -   **탭 뷰 갱신 방식**: 탭 열림/닫힘 시 뷰를 어떻게 최신화할지(패널 열 때 1회 query vs `chrome.tabs.onUpdated` 구독) 미정.
 -   **마이그레이션 경로**: 스키마 버전 관리·IndexedDB 전환 절차 미정.
