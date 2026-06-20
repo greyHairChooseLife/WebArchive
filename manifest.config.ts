@@ -7,8 +7,9 @@ export default defineManifest({
     // 확장이 사용할 Chrome API 권한 선언. 여기 없는 API는 호출 시 실패한다.
     // 'tabs': chrome.tabs.query 등에서 url/title 같은 탭 상세 필드 접근 허용.
     // 'storage': chrome.storage.local/sync API 사용 허용.
+    // 'sidePanel': chrome.sidePanel API(setPanelBehavior 등) 사용 허용. side_panel 키만으론 부족.
     // 특정 사이트의 DOM에 접근하려면 host_permissions(예: <all_urls>)가 별도로 필요.
-    permissions: ['tabs', 'storage'],
+    permissions: ['tabs', 'storage', 'sidePanel'],
     // side_panel.default_path는 브라우저 Side Panel에 로드할 기본 HTML 진입점.
     // 이 키만 있어도 패널은 등록되며, 사용자가 확장 아이콘 메뉴에서 직접 열 수 있다.
     side_panel: {
