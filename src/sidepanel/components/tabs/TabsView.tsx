@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+    debounce,
     groupByDomain,
     groupByTimeBucket,
     groupByWindow,
@@ -23,7 +24,38 @@ function TabsView() {
     const [targetGroupId, setTargetGroupId] = useState('');
 
     useEffect(() => {
-        queryAllTabs().then(setTabs);
+        // 탭 이벤트마다 전체 재조회 + 사라진 탭의 선택 상태 청소.
+        const refresh = async () => {
+            const next = await queryAllTabs();
+            setTabs(next);
+            const liveIds = new Set(next.map((tab) => tab.id));
+            setSelectedTabIds((prev) => {
+                const cleaned = new Set(
+                    [...prev].filter((id) => liveIds.has(id)),
+                );
+                return cleaned.size === prev.size ? prev : cleaned;
+            });
+        };
+
+        refresh();
+
+        // 즉시성 우선: 열기/닫기/이동/활성전환은 바로 재조회.
+        // onUpdated만 단일 네비게이션당 수 회 터지므로 debounce.
+        const onUpdated = debounce(refresh, 250);
+        chrome.tabs.onCreated.addListener(refresh);
+        chrome.tabs.onRemoved.addListener(refresh);
+        chrome.tabs.onMoved.addListener(refresh);
+        chrome.tabs.onActivated.addListener(refresh);
+        chrome.tabs.onUpdated.addListener(onUpdated);
+
+        return () => {
+            chrome.tabs.onCreated.removeListener(refresh);
+            chrome.tabs.onRemoved.removeListener(refresh);
+            chrome.tabs.onMoved.removeListener(refresh);
+            chrome.tabs.onActivated.removeListener(refresh);
+            chrome.tabs.onUpdated.removeListener(onUpdated);
+            onUpdated.cancel();
+        };
     }, []);
 
     const toggleTab = (tabId: number) => {
