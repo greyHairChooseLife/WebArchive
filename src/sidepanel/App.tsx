@@ -21,7 +21,7 @@ function App() {
                     탭
                 </button>
                 <button type="button" onClick={() => setView('library')}>
-                    라이브러리
+                    북마크
                 </button>
                 <button type="button" onClick={() => setView('settings')}>
                     설정

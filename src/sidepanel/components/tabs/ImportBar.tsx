@@ -58,7 +58,7 @@ function ImportBar({
                 disabled={selectedCount === 0 || !selectedGroupId}
                 onClick={onImport}
             >
-                가져오기
+                북마크로
             </button>
             <button type="button" onClick={onSelectAllCurrentWindow}>
                 현재 윈도우 전체
