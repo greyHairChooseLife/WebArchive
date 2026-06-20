@@ -17,5 +17,5 @@
 
 .empty {
     padding: 16px;
-    color: #888;
+    color: var(--text-muted);
 }

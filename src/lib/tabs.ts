@@ -37,17 +37,25 @@ export type GroupedTabs = {
     tabs: LiveTab[];
 };
 
-export function groupByWindow(tabs: LiveTab[]): GroupedTabs[] {
+// 윈도우 id는 노출하지 않고 구분만. 현재 윈도우는 강조 라벨, 나머지는 등장 순번.
+export function groupByWindow(
+    tabs: LiveTab[],
+    currentWindowId?: number,
+): GroupedTabs[] {
     const byWindow = new Map<number, LiveTab[]>();
     for (const tab of tabs) {
         const group = byWindow.get(tab.windowId) ?? [];
         group.push(tab);
         byWindow.set(tab.windowId, group);
     }
-    return Array.from(byWindow.entries()).map(([windowId, windowTabs]) => ({
-        label: `윈도우 ${windowId}`,
-        tabs: windowTabs,
-    }));
+    let otherCount = 0;
+    return Array.from(byWindow.entries()).map(([windowId, windowTabs]) => {
+        const label =
+            windowId === currentWindowId
+                ? '현재 윈도우'
+                : `다른 윈도우 ${++otherCount}`;
+        return { label, tabs: windowTabs };
+    });
 }
 
 export function groupByDomain(tabs: LiveTab[]): GroupedTabs[] {

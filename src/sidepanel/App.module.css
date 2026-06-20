@@ -1,0 +1,28 @@
+.nav {
+    display: flex;
+    gap: 2px;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* 최상위 화면 전환: 밑줄 탭 */
+.nav button {
+    flex: 1;
+    border: none;
+    border-radius: 0;
+    background: none;
+    color: var(--text-muted);
+    padding: 10px 8px;
+    border-bottom: 2px solid transparent;
+}
+
+.nav button:hover:not(:disabled) {
+    background: none;
+    color: var(--text);
+}
+
+.navActive {
+    color: var(--accent) !important;
+    font-weight: 600;
+    border-bottom-color: var(--accent) !important;
+}
