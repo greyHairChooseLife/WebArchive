@@ -11,11 +11,6 @@
 
 상세는 `docs/` 참조.
 
-# 응답 규칙
-
--   응답은 항상 한국어
--   장황한 설명을 피하고 명료하게 표현
-
 # Documentation Guide
 
 -   아래 문서들을 참고해 필요한 정보를 찾고 수정한다.
@@ -33,7 +28,18 @@
 | [runbook.md](docs/runbook.md) | 개발 환경 세팅 / 빌드·확장 로드 절차 / 데이터 백업·복원 | 패키지 매니저·스크립트 확정 / 빌드 절차 변경 / 테스트·린트 도구 추가 |
 | [roadmap.md](docs/roadmap.md) | 다음 작업 확인 / 현재 어느 단계인지 / 단계별 범위·검증 기준 (상세는 `roadmap/{active,done}/`) | 단계 시작 시 `active/`에 상세 계획 문서 작성 / 완료 시 상태표 갱신 + 문서를 `done/`으로 이동 |
 
-# git commit message rule
+# Rules
+
+## running command
+
+-   커맨드 실행은 간단한 설명과 함께 개발자가 직접 실행해주도록 요청
+
+## 응답 규칙
+
+-   응답은 항상 한국어
+-   장황한 설명을 피하고 명료하게 표현
+
+## git commit message rule
 
 -   semantic keyword를 사용
 -   한글로 작성
